@@ -22,7 +22,7 @@ function action (body){
 
     // Get battle-state of pingu the unbroken
     if (body) {
-        matchOpts = {
+        /*var matchOpts = {
             matchId: body.matchId, // unik kamp-ID 
             mapWidth: body.mapWidth,
             mapHeight: body.mapHeight,
@@ -37,9 +37,10 @@ function action (body){
             bonusTiles: body.bonusTiles, //array. felter som inneholder bonuser. se bonusstruktur nedenfor
             walls: body.walls, // array. synlige vegger. se vegg-struktur nedenfor
             fire: body.fire, // array, synlige felt som brenner
-        };
+        };*/
 
-        return matchOpts;
+        //return matchOpts;
+        return body;
     }
 
     return {

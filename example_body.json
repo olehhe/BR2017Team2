@@ -1,0 +1,59 @@
+{
+    "matchId": "1337",
+    "mapWidth": 50,
+    "mapHeight": 50,
+    "suddenDeath": 100,
+    "wallDamage": 1,
+    "penguinDamage": 1,
+    "weaponDamage": 2,
+    "visibility": 5,
+    "weaponRange": 5,
+    "you": {
+        "x": 1,
+        "y": 1,
+        "strength": 10,
+        "direction": "left",
+        "ammo": 10,
+        "weaponRange": 10,
+        "weaponDamage": 2
+      },
+    "enemies": [
+        {
+            "x": 1,
+            "y": 2,
+            "strength": 10,
+            "direction": "bottom",
+            "ammo": 10,
+            "weaponRange": 10,
+            "weaponDamage": 2
+          },
+          {
+            "x": 2,
+            "y": 1,
+            "strength": 10,
+            "direction": "top",
+            "ammo": 10,
+            "weaponRange": 10,
+            "weaponDamage": 2
+          }
+    ],
+    "bonusTiles": [],
+    "walls": [
+        {
+            "x": 5,
+            "y": 5,
+            "strength": 10
+        },
+        {
+            "x": 5,
+            "y": 6,
+            "strength": 10
+        }
+    ],
+    "fire": [
+        {
+            "x": 6,
+            "y": 5
+          }
+    ]
+  }
