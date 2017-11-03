@@ -1,0 +1,61 @@
+{
+    "matchId": "1337", // unik kamp-ID 
+    "mapWidth": 50,
+    "mapHeight": 50,
+    "suddenDeath": 100, // antall runder til sudden death starter
+    "wallDamage": 1, // hvor mye skade som pingvinen tar av å gå inn i veggen
+    "penguinDamage": 1, // hvor mye skade pingvinen tar av å krasje med en annen pingvin -- også hvor mye skade pingvinen din gjør på veggen når den krasjer med den
+    "weaponDamage": 2, // hvor mye skade pingvinen tar av å bli skutt
+    "visibility": 5, // avstanden i felt du kan se på radaren
+    "weaponRange": 5, // avstranden i felt pingvinens laser rekker
+    "you": {
+        "x": 1,
+        "y": 1,
+        "strength": 10,
+        "direction": "left", /* 'left', 'right', 'top', 'bottom' */
+        "ammo": 10,
+        "weaponRange": 10,
+        "weaponDamage": 2
+      }, // informasjon om din pingvin -- se pingvinstrukturen nedenfor
+    "enemies": [
+        {
+            "x": 1,
+            "y": 2,
+            "strength": 10,
+            "direction": "bottom", /* 'left', 'right', 'top', 'bottom' */
+            "ammo": 10,
+            "weaponRange": 10,
+            "weaponDamage": 2
+          },
+          {
+            "x": 2,
+            "y": 1,
+            "strength": 10,
+            "direction": "top", /* 'left', 'right', 'top', 'bottom' */
+            "ammo": 10,
+            "weaponRange": 10,
+            "weaponDamage": 2
+          }
+    ], // array. fiendlige pingviner. se struktur nedenfor
+    "bonusTiles": [ // array. felter som inneholder bonuser. se bonusstruktur nedenfor
+
+    ],
+    "walls": [
+        {
+            "x": 5,
+            "y": 5,
+            "strength": 10
+        },
+        {
+            "x": 5,
+            "y": 6,
+            "strength": 10
+        }
+    ], // array. synlige vegger. se vegg-struktur nedenfor
+    "fire": [
+        {
+            "x": 6,
+            "y": 5
+          }
+    ] // array, synlige felt som brenner
+  }
