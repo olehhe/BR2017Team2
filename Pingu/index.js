@@ -8,7 +8,7 @@ var commands = {
 };
 
 function doSomethingRandom(){
-    var commands = [
+    var _commands = [
         "rotate-right",
         "rotate-left",
         "advance",
@@ -17,7 +17,7 @@ function doSomethingRandom(){
     ];
     var rnd = Math.floor(Math.random() * 5);
 
-    return commands[rnd];
+    return _commands[rnd];
 }
 
 function info(){

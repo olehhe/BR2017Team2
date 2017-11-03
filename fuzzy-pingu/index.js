@@ -2,9 +2,10 @@ function doSomethingRandom(body) {
     var commands = ["rotate-right", "rotate-left", "advance"];
     var rnd = Math.floor(Math.random() * 3);
 
-    var self = body.you, 
+    var self = body.you; 
     var enemy = body.enemies[0];
-    if(shouldFire(body, self, you));
+    
+    if(shouldFire(body, self, enemy));
         return "shoot";
     
     if(shouldFlee(body, self, enemy))
@@ -49,7 +50,6 @@ module.exports = function(context, req) {
   context.done();
 };
 
-
 function shouldFire(body, self, enemy) {
     return isStronger(body, self, enemy) && 
         inRange(body, self, enemy)  &&
@@ -85,7 +85,7 @@ function itBurns(body, self, enemy) {
 
 function willCollide(body, self, enemy) {
   return body.walls.reduce(
-    (acc, next) => proxmity[self.direction](self, body.wall) || acc
+    (acc, next) => collisionMap[self.direction](self, body.wall) || acc
   );
 }
 
