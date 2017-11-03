@@ -39,7 +39,50 @@ function shouldShot(currentPosition, enemyPositions) {
 
 
 // Movement
+function baseMovement(state) {
+    direction = state.you.direction;
+    
+    nextPosition = {x: state.you.x, y: state.you.y};
+    switch (direction) {
+        case 'top':
+            nextPosition.y++;
+            break;
+        case 'bottom':
+            nextPosition.y--;
+            break;
+        case 'right':
+            nextPosition.x++;
+            break;
+        case 'left':
+            nextPosition.x--;
+            break;
+    }
 
+    if (areTilesSafe(point, state)) {
+        // Move ahead if free tile
+        return 'advance';
+    } else {
+        // Random rotation
+        var rotation = ['rotate-left', 'rotate-right'];
+        var rnd = Math.floor(Math.random() * 2);
+        return rotation[rnd];
+    }
+}
+
+function areTilesSafe(point, state) {
+    walls = state.walls;
+    fires = state.fire;
+    return isTileFree(point, walls) && isTileFree(point, fires);
+}
+
+function isTileFree(point, items) {
+    items.forEach(function(item) {
+        if (item.x == point.x && item.y == point.y) {
+            return false;
+        }
+    }, this);
+    return true;
+}
 
 function calculateMove(state){
     // Controls
@@ -62,11 +105,13 @@ function calculateMove(state){
 
     if (shouldShot(state.you, state.enemies)) {
         return commands[4];
+    } else {
+        return baseMovement(state)
     }
 
     // Fallback
-    var rnd = Math.floor(Math.random() * 5);
-    return commands[rnd];
+    //var rnd = Math.floor(Math.random() * 5);
+    //return commands[rnd];
 }
 
 function info(){
