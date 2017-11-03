@@ -26,8 +26,8 @@
             "ammo": 10,
             "weaponRange": 10,
             "weaponDamage": 2
-          },
-          {
+        },
+        {
             "x": 2,
             "y": 1,
             "strength": 10,
@@ -35,7 +35,7 @@
             "ammo": 10,
             "weaponRange": 10,
             "weaponDamage": 2
-          }
+        }
     ],
     "bonusTiles": [],
     "walls": [
@@ -54,6 +54,6 @@
         {
             "x": 6,
             "y": 5
-          }
+        }
     ]
-  }
+}
