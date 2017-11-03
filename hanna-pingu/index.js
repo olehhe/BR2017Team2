@@ -28,23 +28,20 @@ function action (req){
     outsideMap = function (point) {
         return point.x < 0 || point.x >= map.mapWidth || point.y < 0 || point.y >= map.mapHeight;
     },
-    penguin = map.you,
+    your_penguin = map.you,
     opponent = (map.enemies && map.enemies[0]) || {},
-    movement = movements[penguin.direction],
+    movement = movements[your_penguin.direction],
     opMovement = opponent.direction && movements[opponent.direction],
-    nextField = { x: penguin.x + movement.x, y: penguin.y + movement.y },
+    nextField = { x: your_penguin.x + movement.x, y: your_penguin.y + movement.y },
     nextFieldOpponent = opMovement && { x: opponent.x + opMovement.x, y: opponent.y + opMovement.y },
-    nextFieldOpponent2 = opMovement && { x: opponent.x + 2 * opMovement.x, y: opponent.y + 2 * opMovement.y },
-    nextFieldOpponent3 = opMovement && { x: opponent.x + 3 * opMovement.x, y: opponent.y + 3 * opMovement.y },
-    nextFieldOpponent4 = opMovement && { x: opponent.x + 4 * opMovement.x, y: opponent.y + 4 * opMovement.y },
-    hasTarget = function (firingpenguin, targetPoint, maxDistance) {
+    hasTarget = function (firingyour_penguin, targetPoint, maxDistance) {
         var distance, pointAtDistance,
-            firingpenguinMovement = movements[firingpenguin.direction];
-        if (!targetPoint || !targetPoint.x || !firingpenguin.y) {
+            firingyour_penguinMovement = movements[firingyour_penguin.direction];
+        if (!targetPoint || !targetPoint.x || !firingyour_penguin.y) {
             return false;
         }
         for (distance = 0; distance < (maxDistance || map.weaponRange); distance++) {
-            pointAtDistance = { x: firingpenguin.x + (distance + 1) * firingpenguinMovement.x, y: firingpenguin.y + (distance + 1) * firingpenguinMovement.y };
+            pointAtDistance = { x: firingyour_penguin.x + (distance + 1) * firingyour_penguinMovement.x, y: firingyour_penguin.y + (distance + 1) * firingyour_penguinMovement.y };
             if (targetPoint.x == pointAtDistance.x && targetPoint.y == pointAtDistance.y) {
                 return true;
             }
@@ -56,10 +53,10 @@ function action (req){
         if (!opponent.x) {
             return false;
         }
-        vertical = (penguin.y < opponent.y) ? 'top' : 'bottom';
-        horizontal = (penguin.x < opponent.x) ? 'left' : 'right';
-        vd = Math.abs(penguin.y - opponent.y);
-        hd = Math.abs(penguin.x - opponent.x);
+        vertical = (your_penguin.y < opponent.y) ? 'top' : 'bottom';
+        horizontal = (your_penguin.x < opponent.x) ? 'left' : 'right';
+        vd = Math.abs(your_penguin.y - opponent.y);
+        hd = Math.abs(your_penguin.x - opponent.x);
         if (hd < vd) {
             return horizontal;
         } else {
@@ -67,13 +64,13 @@ function action (req){
         }
     },
     closeToBorder = function () {
-        return outsideMap({x: penguin.x +  2 * movement.x, y: penguin.y +  2 * movement.y});
+        return outsideMap({x: your_penguin.x +  2 * movement.x, y: your_penguin.y +  2 * movement.y});
     },
     chasingAxis = getChasingAxis();
 
-    if (hasTarget(penguin, opponent) || hasTarget(penguin, nextFieldOpponent) || hasTarget(penguin, nextFieldOpponent2) || hasTarget(penguin, nextFieldOpponent3)  || hasTarget(penguin, nextFieldOpponent4)) {
+    if (hasTarget(your_penguin, opponent) || hasTarget(your_penguin, nextFieldOpponent)) {
         result = 'shoot';
-    } else if (chasingAxis === penguin.direction) {
+    } else if (chasingAxis === your_penguin.direction) {
         if (wallAt(nextField)) {
             return 'shoot';
         } else if (outsideMap(nextField)) {
@@ -83,7 +80,7 @@ function action (req){
         } else {
             result = 'advance';
         }
-    } else if (chasingAxis || closeToBorder() || wallAt(nextField) || outsideMap(nextField)) {
+    } else if (chasingAxis || closeToBorder() || wall(nextField) || outsideMap(nextField)) {
         result = turnRandom();
     } else {
         result = 'advance';
