@@ -18,6 +18,10 @@ function info(){
     }
 }
 
+function calculateAction(opts) {
+    var pinguX = opts.you.
+}
+
 function action (body){
 
     // Get battle-state of pingu the unbroken
@@ -33,7 +37,7 @@ function action (body){
             weaponDamage: body.weaponDamage, // hvor mye skade pingvinen tar av å bli skutt
             visibility: body.visibility, // avstanden i felt du kan se på radaren
             weaponRange: body.weaponRange, // avstranden i felt pingvinens laser rekker
-            you: body.PENGUIN, // informasjon om din pingvin -- se pingvinstrukturen nedenfor
+            you: body.you, // informasjon om din pingvin -- se pingvinstrukturen nedenfor
             enemies: body.enemies, // array. fiendlige pingviner. se struktur nedenfor
             bonusTiles: body.bonusTiles, //array. felter som inneholder bonuser. se bonusstruktur nedenfor
             walls: body.walls, // array. synlige vegger. se vegg-struktur nedenfor
