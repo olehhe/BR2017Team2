@@ -1,11 +1,11 @@
 // Globals
-var commands = {
+/*var commands = {
     rotateright: "rotate-right",
     rotateleft: "rotate-left",
     advance: "advance",
     retreat: "retreat",
     shoot: "shoot"
-};
+};*/
 
 function doSomethingRandom(){
     var _commands = [
@@ -22,45 +22,53 @@ function doSomethingRandom(){
 
 function info(){
     return {
-        name: "Mr. Randombird",
-        team: "The best team"
+        name: "Mr. NootNoot",
+        team: "Nooting but net!"
     }
 }
 
 function calculateAction(opts) {
     var pingu = opts.you;
-    var enemy = findClosestEnemy(pingu, opts.enemies, opts.visibility);
-    
-    if (!enemy) {
-        return doSomethingRandom();
-    }
 
-    // Enemy in range! SHOOT TO KILL!
-    var pinguX = pingu.x, pinguY = pingu.y;
-    var enemyX = enemy.x, enemyY = enemy.y;
-    
-    var shouldShoot = false;
-    if (pinguY === enemyY) {
-        // Both on same Y-axis
-        shouldShoot = ((pinguX < enemyX) && pingu.direction === 'right') 
-            || ((pinguX > enemyX) && pingu.direction === 'left');
-    } else if (pinguX === enemyX) {
-        // Both on same X-axis
-        shouldShoot = ((pinguY < enemyY) && pingu.direction === 'bottom')
-            || ((pinguY > enemyY) && pingu.direction === 'top');
-    }
-
+    var shouldShoot = shouldShoot(pingu, opts.enemies);
     if (shouldShoot) {
-        return commands.shoot;
+        return 'shoot';
     } else {
         return doSomethingRandom();
     }
 }
 
+function shouldShoot(currentPosition, enemyPositions) {
+    enemyPositions.forEach(function(enemy) {
+        if (distanceToEnemy(currentPosition, enemy) < 3) {
+            shoot = false
+            switch (currentPosition.direction) {
+                case "top":
+                shoot = enemy.x == currentPosition.x && enemy.y > currentPosition.y
+                break;
+                case "bottom":
+                shoot = enemy.x == currentPosition.x && enemy.y < currentPosition.y
+                break;
+                case "left":
+                shoot = enemy.y == currentPosition.y && enemy.x < currentPosition.x
+                break;
+                case "right":
+                shoot = enemy.y == currentPosition.y && enemy.x > currentPosition.x
+                break;
+            }  
+            if (shoot) {
+                return true;
+            }
+        }
+    }, this);
+    
+    return false;
+}
+
 // Utilities
-function findClosestEnemy(you, enemies, fieldOfViewRadius) {
+/*function findClosestEnemy(you, enemies, fieldOfViewRadius) {
     var closestEnemy = null;
-    enemies.array.forEach(function(enemy) {
+    enemies.forEach(function(enemy) {
         enemyIsInRange = (enemy.x < you.x + fieldOfViewRadius) && (enemy.y < you.y + fieldOfViewRadius);
 
         if (enemyIsInRange) {
@@ -73,7 +81,7 @@ function findClosestEnemy(you, enemies, fieldOfViewRadius) {
     }, this);
 
     return closestEnemy;
-}
+}*/
 
 function action (body){
 
@@ -102,7 +110,7 @@ function action (body){
 
         return {
             command: action
-        }
+        };
     }
 
     return {

@@ -1,11 +1,12 @@
-function doSomethingRandom(body) {
+function doSomething(body) {
+
     var commands = ["rotate-right", "rotate-left", "advance"];
     var rnd = Math.floor(Math.random() * 3);
 
     var self = body.you; 
     var enemy = body.enemies[0];
     
-    if(shouldFire(body, self, enemy));
+    if(shouldFire(body, self, enemy))
         return "shoot";
     
     if(shouldFlee(body, self, enemy))
@@ -19,11 +20,11 @@ function info() {
     name: "Mr. Fuzzybird",
     team: "The best team"
   };
-}
+} 
 
 function action(body) {
   return {
-    command: doSomethingRandom()
+    command: doSomething(body)
   };
 }
 
@@ -32,7 +33,7 @@ function getBody(req) {
     case "GET":
       return info();
     case "POST":
-      return action(req);
+      return action(req.body);
   }
 }
 
@@ -52,7 +53,7 @@ module.exports = function(context, req) {
 
 function shouldFire(body, self, enemy) {
     return isStronger(body, self, enemy) && 
-        inRange(body, self, enemy)  &&
+        inRange(body, self, enemy) &&
         inSightOfFire(body, self, enemy);
 }
 
@@ -63,7 +64,7 @@ function shouldFlee(body, self, enemy) {
 }
 
 function isStronger(body, self, enemy) {
-    return enemy.x && self.strength > self.strength;
+    return self.strength > enemy.strength;
 }
 
 function inSightOfFire(body, self, enemy) {
@@ -72,8 +73,8 @@ function inSightOfFire(body, self, enemy) {
 
 function inRange(body, self, enemy) {
   return (
-    Math.abs(self.x - enemy.x) <= self.weaponrange ||
-    Math.abs(self.y - enemy.y) <= self.weaponrange
+    Math.abs(self.x - enemy.x) <= self.weaponRange ||
+    Math.abs(self.y - enemy.y) <= self.weaponRange
   );
 }
 
