@@ -1,4 +1,4 @@
-function doSomethingRandom(body) {
+function doSomething(body) {
 
     var commands = ["rotate-right", "rotate-left", "advance"];
     var rnd = Math.floor(Math.random() * 3);
@@ -20,11 +20,11 @@ function info() {
     name: "Mr. Fuzzybird",
     team: "The best team"
   };
-}
+} 
 
 function action(body) {
   return {
-    command: doSomethingRandom(body)
+    command: doSomething(body)
   };
 }
 
@@ -33,7 +33,7 @@ function getBody(req) {
     case "GET":
       return info();
     case "POST":
-      return action(JSON.parse(req.body));
+      return action(req.body);
   }
 }
 
