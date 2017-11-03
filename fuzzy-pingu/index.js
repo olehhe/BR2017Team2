@@ -4,7 +4,7 @@ function doSomethingRandom(body) {
 
     var self = body.you, 
     var enemy = body.enemies[0];
-    if(shouldFire(body, self, you));
+    if(shouldFire(body, self, enemy));
         return "shoot";
     
     if(shouldFlee(body, self, enemy))
