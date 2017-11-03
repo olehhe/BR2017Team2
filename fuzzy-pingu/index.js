@@ -64,7 +64,7 @@ function shouldFlee(body, self, enemy) {
 }
 
 function isStronger(body, self, enemy) {
-    return self.strength > self.strength;
+    return self.strength > enemy.strength;
 }
 
 function inSightOfFire(body, self, enemy) {
