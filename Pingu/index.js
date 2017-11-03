@@ -1,11 +1,11 @@
 // Globals
-var commands = {
+/*var commands = {
     rotateright: "rotate-right",
     rotateleft: "rotate-left",
     advance: "advance",
     retreat: "retreat",
     shoot: "shoot"
-};
+};*/
 
 function doSomethingRandom(){
     var _commands = [
@@ -22,8 +22,8 @@ function doSomethingRandom(){
 
 function info(){
     return {
-        name: "Mr. Randombird",
-        team: "The best team"
+        name: "Mr. NootNoot",
+        team: "Nooting but net!"
     }
 }
 
@@ -66,7 +66,7 @@ function shouldShoot(currentPosition, enemyPositions) {
 }
 
 // Utilities
-function findClosestEnemy(you, enemies, fieldOfViewRadius) {
+/*function findClosestEnemy(you, enemies, fieldOfViewRadius) {
     var closestEnemy = null;
     enemies.forEach(function(enemy) {
         enemyIsInRange = (enemy.x < you.x + fieldOfViewRadius) && (enemy.y < you.y + fieldOfViewRadius);
@@ -81,7 +81,7 @@ function findClosestEnemy(you, enemies, fieldOfViewRadius) {
     }, this);
 
     return closestEnemy;
-}
+}*/
 
 function action (body){
 
