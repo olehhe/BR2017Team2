@@ -87,7 +87,7 @@ function action (body){
 
     // Get battle-state of pingu the unbroken
     if (body) {
-    //    body = JSON.parse(body);
+        body = JSON.parse(body);
         /*var matchOpts = {
             matchId: body.matchId, // unik kamp-ID 
             mapWidth: body.mapWidth,
