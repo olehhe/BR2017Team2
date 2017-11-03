@@ -39,22 +39,39 @@ function calculateAction(opts) {
     var pinguX = pingu.x, pinguY = pingu.y;
     var enemyX = enemy.x, enemyY = enemy.y;
     
-    var shouldShoot = false;
-    if (pinguY === enemyY) {
-        // Both on same Y-axis
-        shouldShoot = ((pinguX < enemyX) && pingu.direction === 'right') 
-            || ((pinguX > enemyX) && pingu.direction === 'left');
-    } else if (pinguX === enemyX) {
-        // Both on same X-axis
-        shouldShoot = ((pinguY < enemyY) && pingu.direction === 'bottom')
-            || ((pinguY > enemyY) && pingu.direction === 'top');
-    }
-
+    var shouldShoot = shouldShoot(pingu, opts.enemies);
     if (shouldShoot) {
         return commands.shoot;
     } else {
         return doSomethingRandom();
     }
+}
+
+function shouldShoot(currentPosition, enemyPositions) {
+    enemyPositions.forEach(function(enemy) {
+        if (distanceToEnemy(currentPosition, enemy) < 3) {
+            shoot = false
+            switch (currentPosition.direction) {
+                case "top":
+                shoot = enemy.x == currentPosition.x && enemy.y > currentPosition.y
+                break;
+                case "bottom":
+                shoot = enemy.x == currentPosition.x && enemy.y < currentPosition.y
+                break;
+                case "left":
+                shoot = enemy.y == currentPosition.y && enemy.x < currentPosition.x
+                break;
+                case "right":
+                shoot = enemy.y == currentPosition.y && enemy.x > currentPosition.x
+                break;
+            }  
+            if (shoot) {
+                return true;
+            }
+        }
+    }, this);
+    
+    return false;
 }
 
 // Utilities
@@ -78,7 +95,7 @@ function findClosestEnemy(you, enemies, fieldOfViewRadius) {
 function action (body){
 
     // Get battle-state of pingu the unbroken
-    //if (body) {
+    if (body) {
     //    body = JSON.parse(body);
         /*var matchOpts = {
             matchId: body.matchId, // unik kamp-ID 
@@ -98,13 +115,13 @@ function action (body){
             command: doSomethingRandom()
         };*/
 
-/*        var action = calculateAction(body);
+        var action = calculateAction(body);
 
         return {
             command: action
         }
     }
-*/
+
     return {
         command: doSomethingRandom()
     };
