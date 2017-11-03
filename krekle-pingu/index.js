@@ -40,8 +40,9 @@ function shouldShot(currentPosition, enemyPositions) {
 
 // Movement
 
+
 function calculateMove(state){
-    // Controle
+    // Controls
     var direction = state.you.direction;
     if(nextAction) {
         if(nextAction != direction) {
@@ -59,7 +60,7 @@ function calculateMove(state){
         "shoot"
     ];
 
-    if (shouldShot(state.you, state.enemyPositions)) {
+    if (shouldShot(state.you, state.enemies)) {
         return commands[4];
     }
 
