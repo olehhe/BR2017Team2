@@ -2,28 +2,28 @@ var nextAction;
 
 // Agressive
 function distanceToEnemy(currentPosition, enemyPosition) {
-    distanceX = Math.abs(currentPosition.x - enemyPosition.x)
-    distanceY = Math.abs(currentPosition.y - enemyPosition.y)
-    distance = Math.sqrt(distanceX*distanceX + distanceY*distanceY);
+    var distanceX = Math.abs(currentPosition.x - enemyPosition.x);
+    var distanceY = Math.abs(currentPosition.y - enemyPosition.y);
+    var distance = Math.sqrt(distanceX*distanceX + distanceY*distanceY);
     return distance;
 }
 
 function shouldShot(currentPosition, enemyPositions) {
     enemyPositions.forEach(function(enemy) {
         if (distanceToEnemy(currentPosition, enemy) < 3) {
-            shoot = false
+            var shoot = false;
             switch (currentPosition.direction) {
                 case "top":
-                shoot = enemy.x == currentPosition.x && enemy.y > currentPosition.y
+                shoot = enemy.x == currentPosition.x && enemy.y > currentPosition.y;
                 break;
                 case "bottom":
-                shoot = enemy.x == currentPosition.x && enemy.y < currentPosition.y
+                shoot = enemy.x == currentPosition.x && enemy.y < currentPosition.y;
                 break;
                 case "left":
-                shoot = enemy.y == currentPosition.y && enemy.x < currentPosition.x
+                shoot = enemy.y == currentPosition.y && enemy.x < currentPosition.x;
                 break;
                 case "right":
-                shoot = enemy.y == currentPosition.y && enemy.x > currentPosition.x
+                shoot = enemy.y == currentPosition.y && enemy.x > currentPosition.x;
                 break;
             }  
             if (shoot) {
