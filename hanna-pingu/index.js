@@ -1,13 +1,6 @@
-function doSomethingRandom(){
-    var commands = [
-        "rotate-right",
-        "rotate-left",
-        "advance",
-        "retreat",
-        "shoot"
-    ];
-    var rnd = Math.floor(Math.random() * 5);
-
+function turnRandom(){
+    var commands = ["rotate-right", "rotate-left"];
+    var rnd = Math.floor(Math.random() * 2);
     return commands[rnd];
 }
 
@@ -84,14 +77,14 @@ function action (req){
         if (wallAt(nextField)) {
             return 'shoot';
         } else if (outsideMap(nextField)) {
-            result = 'rotate-left';
+            result = turnRandom();
         } else if (hasTarget(opponent, nextField, 1)) {
             result = 'pass';
         } else {
             result = 'advance';
         }
     } else if (chasingAxis || closeToBorder() || wallAt(nextField) || outsideMap(nextField)) {
-        result = 'rotate-left';
+        result = turnRandom();
     } else {
         result = 'advance';
     }
