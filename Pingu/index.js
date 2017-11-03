@@ -29,19 +29,12 @@ function info(){
 
 function calculateAction(opts) {
     var pingu = opts.you;
-    var enemy = findClosestEnemy(pingu, opts.enemies, opts.visibility);
-    
-    if (!enemy) {
-        return doSomethingRandom();
-    }
-
-    // Enemy in range! SHOOT TO KILL!
     var pinguX = pingu.x, pinguY = pingu.y;
     var enemyX = enemy.x, enemyY = enemy.y;
     
     var shouldShoot = shouldShoot(pingu, opts.enemies);
     if (shouldShoot) {
-        return 'shoot';
+        return commands.shoot;
     } else {
         return doSomethingRandom();
     }
@@ -77,7 +70,7 @@ function shouldShoot(currentPosition, enemyPositions) {
 // Utilities
 function findClosestEnemy(you, enemies, fieldOfViewRadius) {
     var closestEnemy = null;
-    enemies.array.forEach(function(enemy) {
+    enemies.forEach(function(enemy) {
         enemyIsInRange = (enemy.x < you.x + fieldOfViewRadius) && (enemy.y < you.y + fieldOfViewRadius);
 
         if (enemyIsInRange) {
