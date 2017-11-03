@@ -1,8 +1,16 @@
-function doSomethingRandom() {
-  var commands = ["rotate-right", "rotate-left", "advance", "retreat", "shoot"];
-  var rnd = Math.floor(Math.random() * 5);
+function doSomethingRandom(body) {
+    var commands = ["rotate-right", "rotate-left", "advance"];
+    var rnd = Math.floor(Math.random() * 3);
 
-  return commands[rnd];
+    var self = body.you, 
+    var enemy = body.enemies[0];
+    if(shouldFire(body, self, you));
+        return "shoot";
+    
+    if(shouldFlee(body, self, enemy))
+        return "retreat";
+
+    return commands[rnd]
 }
 
 function info() {
@@ -42,7 +50,6 @@ module.exports = function(context, req) {
 };
 
 
-
 function shouldFire(body, self, enemy) {
     return isStronger(body, self, enemy) && 
         inRange(body, self, enemy)  &&
@@ -51,8 +58,8 @@ function shouldFire(body, self, enemy) {
 
 function shouldFlee(body, self, enemy) {
     return itBurns(body, self, enemy) || 
-        isStronger(body, self, enemy) || 
-        inRange(body, self, enemy);
+        (!isStronger(body, self, enemy) &&
+        inRange(body, self, enemy));
 }
 
 function isStronger(body, self, enemy) {
