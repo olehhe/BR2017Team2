@@ -29,12 +29,10 @@ function info(){
 
 function calculateAction(opts) {
     var pingu = opts.you;
-    var pinguX = pingu.x, pinguY = pingu.y;
-    var enemyX = enemy.x, enemyY = enemy.y;
-    
+
     var shouldShoot = shouldShoot(pingu, opts.enemies);
     if (shouldShoot) {
-        return commands.shoot;
+        return 'shoot';
     } else {
         return doSomethingRandom();
     }
@@ -112,7 +110,7 @@ function action (body){
 
         return {
             command: action
-        }
+        };
     }
 
     return {
