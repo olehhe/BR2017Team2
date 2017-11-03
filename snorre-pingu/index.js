@@ -1,5 +1,9 @@
 function doSomethingRandom(){
-    return "shoot";
+    var nextCommand = process.env["nextCommand"];
+
+    if(nextCommand) {
+        return nextCommand;
+    }
 
     var commands = [
         "rotate-right",
