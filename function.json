@@ -3,6 +3,5 @@
     "type": "httpTrigger",
     "direction": "in",
     "authLevel": "anonymous",
-    "methods": [ "get", "post" ],
-    "route": "pingu"
+    "methods": [ "get", "post" ]
 }
