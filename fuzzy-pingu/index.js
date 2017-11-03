@@ -9,8 +9,8 @@ function doSomething(body) {
     if(shouldFire(body, self, enemy))
         return "shoot";
     
-    if(shouldFlee(body, self, enemy))
-        return "retreat";
+    // if(shouldFlee(body, self, enemy))
+    //     return "retreat";
 
     return commands[rnd]
 }
@@ -59,7 +59,7 @@ function shouldFire(body, self, enemy) {
 
 function shouldFlee(body, self, enemy) {
     return itBurns(body, self, enemy) || 
-        (!isStronger(body, self, enemy) &&
+        (isStronger(body, enemy, self) &&
         inRange(body, self, enemy));
 }
 
