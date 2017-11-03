@@ -78,8 +78,8 @@ function findClosestEnemy(you, enemies, fieldOfViewRadius) {
 function action (body){
 
     // Get battle-state of pingu the unbroken
-    if (body) {
-        body = JSON.parse(body);
+    //if (body) {
+    //    body = JSON.parse(body);
         /*var matchOpts = {
             matchId: body.matchId, // unik kamp-ID 
             mapWidth: body.mapWidth,
@@ -98,13 +98,13 @@ function action (body){
             command: doSomethingRandom()
         };*/
 
-        var action = calculateAction(body);
+/*        var action = calculateAction(body);
 
         return {
             command: action
         }
     }
-
+*/
     return {
         command: doSomethingRandom()
     };
