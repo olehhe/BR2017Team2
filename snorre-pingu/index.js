@@ -1,5 +1,15 @@
-function doSomethingRandom(){
-    return "shoot";
+var nextAction;
+
+function doSomethingRandom(state){
+    var direction = state.you.direction;
+
+    if(nextAction) {
+        if(nextAction != direction) {
+            return "rotate-right";
+        }
+
+        return "advance";
+    }
 
     var commands = [
         "rotate-right",
@@ -15,15 +25,15 @@ function doSomethingRandom(){
 
 function info(){
     return {
-        name: "Mr. Randombird",
-        team: "The best team"
+        name: "Neida",
+        team: ":("
     }
 }
 
-function action (body){
+function action(state) {
     return {
-            command: doSomethingRandom()
-            };
+        command: doSomethingRandom(state)
+    };
 }
 
 function getBody(req){
@@ -31,7 +41,11 @@ function getBody(req){
         case 'GET':
             return info();
         case 'POST':
-            return action(req);
+            return action(req.body);
+        case 'PATCH':
+            const previousAction = nextAction;
+            nextAction = req.body.nextAction;
+            return { nextAction, previousAction };
     }
 }
 
