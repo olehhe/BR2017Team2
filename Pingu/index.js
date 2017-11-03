@@ -41,7 +41,7 @@ function calculateAction(opts) {
     
     var shouldShoot = shouldShoot(pingu, opts.enemies);
     if (shouldShoot) {
-        return commands.shoot;
+        return 'shoot';
     } else {
         return doSomethingRandom();
     }
