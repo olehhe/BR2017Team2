@@ -53,8 +53,8 @@ module.exports = function(context, req) {
 
 function shouldFire(body, self, enemy) {
     return isStronger(body, self, enemy) && 
-        inRange(body, self, enemy)  &&
-        inSightOfFire(body, self, enemy);
+        (inRange(body, self, enemy) &&
+        inSightOfFire(body, self, enemy));
 }
 
 function shouldFlee(body, self, enemy) {
@@ -73,8 +73,8 @@ function inSightOfFire(body, self, enemy) {
 
 function inRange(body, self, enemy) {
   return (
-    Math.abs(self.x - enemy.x) <= self.weaponrange ||
-    Math.abs(self.y - enemy.y) <= self.weaponrange
+    Math.abs(self.x - enemy.x) <= self.weaponRange ||
+    Math.abs(self.y - enemy.y) <= self.weaponRange
   );
 }
 
