@@ -1,7 +1,4 @@
-function testModule() {
-    this.testFunction = function() {
-        return "TTESSTT!!";
-    }
-}
 
-module.exports = testModule;
+module.exports = function(context) {
+    context.bindings.response = { status: 200, body: "Nice test!!" };
+};
