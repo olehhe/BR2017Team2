@@ -37,6 +37,9 @@ module.exports = function (context, req) {
 
     context.log('JavaScript HTTP trigger function processed a request.', req.body);
     context.res = {
+        headers: {
+            "Access-Control-Allow-Origin": "*"  
+        },
         body: getBody(req)
     };
     context.done();
