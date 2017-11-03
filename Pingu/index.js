@@ -1,3 +1,12 @@
+// Globals
+var commands = {
+    rotateright: "rotate-right",
+    rotateleft: "rotate-left",
+    advance: "advance",
+    retreat: "retreat",
+    shoot: "shoot"
+};
+
 function doSomethingRandom(){
     var commands = [
         "rotate-right",
@@ -19,7 +28,51 @@ function info(){
 }
 
 function calculateAction(opts) {
-    var pinguX = opts.you.
+    var pingu = opts.you;
+    var enemy = findClosestEnemy(pingu, opts.enemies, opts.visibility);
+    
+    if (!enemy) {
+        return doSomethingRandom();
+    }
+
+    // Enemy in range! SHOOT TO KILL!
+    var pinguX = pingu.x, pinguY = pingu.y;
+    var enemyX = enemy.x, enemyY = enemy.y;
+    
+    var shouldShoot = false;
+    if (pinguY === enemyY) {
+        // Both on same Y-axis
+        shouldShoot = ((pinguX < enemyX) && pingu.direction === 'right') 
+            || ((pinguX > enemyX) && pingu.direction === 'left');
+    } else if (pinguX === enemyX) {
+        // Both on same X-axis
+        shouldShoot = ((pinguY < enemyY) && pingu.direction === 'bottom')
+            || ((pinguY > enemyY) && pingu.direction === 'top');
+    }
+
+    if (shouldShoot) {
+        return commands.shoot;
+    } else {
+        return doSomethingRandom();
+    }
+}
+
+// Utilities
+function findClosestEnemy(you, enemies, fieldOfViewRadius) {
+    var closestEnemy = null;
+    enemies.array.forEach(function(enemy) {
+        enemyIsInRange = (enemy.x < you.x + fieldOfViewRadius) && (enemy.y < you.y + fieldOfViewRadius);
+
+        if (enemyIsInRange) {
+            // Is enemy closer than the previous?
+            if ((enemy.x + enemy.y) < (closestEnemy.x + closestEnemy.y)) {
+                closestEnemy.x = enemy.x;
+                closestEnemy.y = enemy.y;
+            }
+        }
+    }, this);
+
+    return closestEnemy;
 }
 
 function action (body){
@@ -27,7 +80,7 @@ function action (body){
     // Get battle-state of pingu the unbroken
     if (body) {
         body = JSON.parse(body);
-        var matchOpts = {
+        /*var matchOpts = {
             matchId: body.matchId, // unik kamp-ID 
             mapWidth: body.mapWidth,
             mapHeight: body.mapHeight,
@@ -43,9 +96,13 @@ function action (body){
             walls: body.walls, // array. synlige vegger. se vegg-struktur nedenfor
             fire: body.fire, // array, synlige felt som brenner
             command: doSomethingRandom()
-        };
+        };*/
 
-        return matchOpts;
+        var action = calculateAction(body);
+
+        return {
+            command: action
+        }
     }
 
     return {
