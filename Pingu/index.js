@@ -29,7 +29,7 @@ function info(){
 
 function calculateAction(opts) {
     var pingu = opts.you;
-    var enemy = findClosestEnemy(pingu, opts.enemies);
+    var enemy = findClosestEnemy(pingu, opts.enemies, opts.visibility);
     
     if (!enemy) {
         return doSomethingRandom();
@@ -100,7 +100,9 @@ function action (body){
 
         var action = calculateAction(body);
 
-        return action;
+        return {
+            command: action
+        }
     }
 
     return {
