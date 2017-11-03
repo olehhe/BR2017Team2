@@ -24,7 +24,7 @@ function info() {
 
 function action(body) {
   return {
-    command: doSomethingRandom(JSON.parse(body))
+    command: doSomethingRandom(body)
   };
 }
 
@@ -33,7 +33,7 @@ function getBody(req) {
     case "GET":
       return info();
     case "POST":
-      return action(req);
+      return action(JSON.parse(req.body));
   }
 }
 
