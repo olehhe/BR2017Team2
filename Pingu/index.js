@@ -37,7 +37,6 @@ function action (body){
             bonusTiles: body.bonusTiles, //array. felter som inneholder bonuser. se bonusstruktur nedenfor
             walls: body.walls, // array. synlige vegger. se vegg-struktur nedenfor
             fire: body.fire, // array, synlige felt som brenner
-            command: doSomethingRandom
         };
 
         return matchOpts;
