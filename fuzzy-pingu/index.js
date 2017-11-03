@@ -1,4 +1,5 @@
 function doSomethingRandom(body) {
+
     var commands = ["rotate-right", "rotate-left", "advance"];
     var rnd = Math.floor(Math.random() * 3);
 
@@ -23,7 +24,7 @@ function info() {
 
 function action(body) {
   return {
-    command: doSomethingRandom()
+    command: doSomethingRandom(JSON.parse(body))
   };
 }
 
