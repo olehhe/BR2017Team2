@@ -9,8 +9,8 @@ function doSomething(body) {
     if(shouldFire(body, self, enemy))
         return "shoot";
     
-    // if(shouldFlee(body, self, enemy))
-    //     return "retreat";
+    if(shouldFlee(body, self, enemy))
+        return "retreat";
 
     return commands[rnd]
 }
@@ -79,15 +79,15 @@ function inRange(body, self, enemy) {
 }
 
 function itBurns(body, self, enemy) {
-  return body.fire.reduce(
-    (acc, next) => (next.x === self.x && next.y === self.y) || acc
-  );
+  return body.fire.reduce((acc, next) => {
+   return (next.x === self.x && next.y === self.y) || acc;
+  });
 }
 
 function willCollide(body, self, enemy) {
-  return body.walls.reduce(
-    (acc, next) => collisionMap[self.direction](self, body.wall) || acc
-  );
+  return body.walls.reduce((acc, next) => {
+    return collisionMap[self.direction](self, body.wall) || acc;
+  });
 }
 
 var collisionMap = {
