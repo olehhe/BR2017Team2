@@ -72,16 +72,29 @@ function inSightOfFire(body, self, enemy) {
 }
 
 function inRange(body, self, enemy) {
-  return (
-    Math.abs(self.x - enemy.x) <= self.weaponRange ||
-    Math.abs(self.y - enemy.y) <= self.weaponRange
-  );
+  return Math.abs(self.x - enemy.x) <= self.weaponRange ||
+    Math.abs(self.y - enemy.y) <= self.weaponRange;
+}
+
+function getRightDirection(body, self, enemy) {
+  if(self.x === enemy.x){
+    if(self.y < enemy.y)
+      return 'top';
+    return 'bottom';
+  }
+  if(self.y === enemy.y){
+    if(self.x < enemy.x)
+      return 'right';
+    return 'left';
+  }
+}
+
+function standingInFire(alreadyBurnt, fire, self){
+  return alreadyBurnt || (self.x === fire.x && self.y == fire.y);
 }
 
 function itBurns(body, self, enemy) {
-  return body.fire.reduce((acc, next) => {
-   return (next.x === self.x && next.y === self.y) || acc;
-  });
+  return body.fire.reduce(standingInFire, false);
 }
 
 function willCollide(body, self, enemy) {
