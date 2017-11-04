@@ -207,7 +207,7 @@ function orientTo(pingu, point) {
     if (amIWellOriented(pingu, point)) {
         return null;
     }
-    var directionOfPoint = inWhichDirectionIsPoint(point);
+    var directionOfPoint = inWhichDirectionIsPoint(pingu, point);
     if ((pingu.direction == 'top' && directionOfPoint.indexOf('right') != -1) ||
         (pingu.direction == 'right' && directionOfPoint.indexOf('bottom') != -1) ||
         (pingu.direction == 'bottom' && directionOfPoint.indexOf('left') != -1) ||
@@ -251,7 +251,7 @@ function calculateMove(state){
         return commands[4];
     } else {
         //var powerUpPoint = powerUpInVicinity(state);
-        var powerUpPoint = null
+        var powerUpPoint = null;
         if (powerUpPoint) {
             //moveTo(powerUpPoint);
         } else {
