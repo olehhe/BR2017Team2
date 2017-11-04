@@ -8,10 +8,13 @@ function distanceToEnemy(currentPosition, enemyPosition) {
     return distance;
 }
 
-function shouldShot(currentPosition, enemyPositions) {
+function shouldShot(state) {
+    currentPosition = state.you;
+    enemyPositions = state.enemies;
+
+    var shoot = false;
     enemyPositions.forEach(function(enemy) {
-        if (distanceToEnemy(currentPosition, enemy) < 3) {
-            var shoot = false;
+        if (distanceToEnemy(currentPosition, enemy) < state.visibility) {
             switch (currentPosition.direction) {
                 case "top":
                 shoot = enemy.x == currentPosition.x && enemy.y > currentPosition.y;
@@ -25,21 +28,69 @@ function shouldShot(currentPosition, enemyPositions) {
                 case "right":
                 shoot = enemy.y == currentPosition.y && enemy.x > currentPosition.x;
                 break;
-            }  
-            if (shoot) {
-                return true;
             }
         }
     }, this);
     
-    return false;
+    return shoot;
 }
 
 // Survival
 
 
 // Movement
+function baseMovement(state) {
+    direction = state.you.direction;
+    nextPosition = {x: state.you.x, y: state.you.y};
+    switch (direction) {
+        case 'top':
+            nextPosition.y = nextPosition.y - 1;
+            break;
+        case 'bottom':
+            nextPosition.y = nextPosition.y + 1;
+            break;
+        case 'right':
+            nextPosition.x = nextPosition.x + 1;
+            break;
+        case 'left':
+            nextPosition.x = nextPosition.x - 1;
+            break;
+    }
 
+    if (isTileSafe(nextPosition, state)) {
+        // Move ahead if free tile
+        return 'advance';
+    } else {
+        // Random rotation
+        var rotation = ['rotate-left', 'rotate-right'];
+        var rnd = Math.floor(Math.random() * 2);
+        return rotation[rnd];
+    }
+}
+
+function isTileSafe(point, state) {
+    if(point.x == 0 || point.x == state.mapWidth) {
+        return false;
+    }
+
+    if(point.y == 0 || point.y == state.mapHeight) {
+        return false;
+    }
+    
+    walls = state.walls;
+    fires = state.fire;
+    return isTileOpen(point, walls) && isTileOpen(point, fires);
+}
+
+function isTileOpen(point, items) {
+    var isOpen = true;
+    items.forEach(function(item) {
+        if (item.x == point.x && item.y == point.y) {
+            isOpen = false;
+        }
+    }, this);
+    return isOpen;
+}
 
 function calculateMove(state){
     // Controls
@@ -60,13 +111,15 @@ function calculateMove(state){
         "shoot"
     ];
 
-    if (shouldShot(state.you, state.enemies)) {
+    if (shouldShot(state)) {
         return commands[4];
+    } else {
+        return baseMovement(state)
     }
 
     // Fallback
-    var rnd = Math.floor(Math.random() * 5);
-    return commands[rnd];
+    //var rnd = Math.floor(Math.random() * 5);
+    //return commands[rnd];
 }
 
 function info(){
