@@ -100,11 +100,11 @@ function shootOrAdvance(state) {
         return 'advance';
     }
 
-    return  isNotMapBorder(nextPosition) ? 'shoot' : null;
+    return isNotMapBorder(nextPosition, state) ? 'shoot' : null;
 
 }
 
-function isNotMapBorder(nextPos) {
+function isNotMapBorder(nextPosition, state) {
     return nextPosition.x >= 0 && nextPosition.x <= state.mapWidth 
         && nextPosition.y >= 0 && nextPosition.y <= state.mapHeight;
 }
