@@ -85,7 +85,7 @@ function turnAgainsStuffLeftOrRight(state, stuff) {
             if (currentPosition.y == stuff.y) {
                 if (currentPosition.x > stuff.x) {
                     return 'rotate-left';
-                } else {
+                } else if (currentPosition.x < stuff.x) {
                     return 'rotate-right';
                 }
             }
@@ -94,7 +94,7 @@ function turnAgainsStuffLeftOrRight(state, stuff) {
             if (currentPosition.y == stuff.y) {
                 if (currentPosition.x < stuff.x) {
                     return 'rotate-left';
-                } else {
+                } else if (currentPosition.x > stuff.x)  {
                     return 'rotate-right';
                 }
             }
@@ -102,18 +102,18 @@ function turnAgainsStuffLeftOrRight(state, stuff) {
         case "left":
             if (currentPosition.x == stuff.x) {
                 if (currentPosition.y > stuff.y) {
-                    return 'rotate-left';
-                } else {
                     return 'rotate-right';
+                } else if (currentPosition.y < stuff.y) {
+                    return 'rotate-left';
                 }
             }
             break;
         case "right":
             if (currentPosition.x == stuff.x) {
                 if (currentPosition.y < stuff.y) {
-                    return 'rotate-left';
-                } else {
                     return 'rotate-right';
+                } else if (currentPosition.y > stuff.y) {
+                    return 'rotate-left';
                 }
             }
             break;
