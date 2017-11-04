@@ -165,7 +165,6 @@ function baseMovement(state) {
     switch (direction) {
         case 'top':
             nextPosition.y = nextPosition.y - 1;
-            nextTurn.
             break;
         case 'bottom':
             nextPosition.y = nextPosition.y + 1;
