@@ -32,7 +32,7 @@ function getPlayerVicinityGrid(state) {
     return grid;
 }
 
-function shouldShot(state) {
+function shouldShoot(state) {
     currentPosition = state.you;
     enemyPositions = state.enemies;
 
@@ -212,20 +212,20 @@ function orientTo(pingu, point) {
         (pingu.direction == 'right' && directionOfPoint.indexOf('bottom') != -1) ||
         (pingu.direction == 'bottom' && directionOfPoint.indexOf('left') != -1) ||
         (pingu.direction == 'left' && directionOfPoint.indexOf('top') != -1)) {
-        return action('turn-right');
+        return 'turn-right';
     }
-    return action('turn-left');
+    return 'turn-left';
 }
 
 function moveTo(pingu, point) {
     if (pingu.x == point.x && pingu.y == point.y) {
-        return action('shoot');
+        return 'shoot';
     }
     if (!amIWellOriented(pingu, point)) {
         var orientResult = orientTo(point);
         if (orientResult) return orientResult;
     }
-    return action('advance');
+    return 'advance';
 }
 
 function calculateMove(state){
@@ -247,15 +247,16 @@ function calculateMove(state){
         "shoot"
     ];
 
-    if (shouldShot(state)) {
+    if (shouldShoot(state)) {
         return commands[4];
     } else {
-        var powerUpPoint = powerUpInVicinity(state);
+        //var powerUpPoint = powerUpInVicinity(state);
+        var powerUpPoint = null
         if (powerUpPoint) {
-            moveTo(powerUpPoint);
+            //moveTo(powerUpPoint);
+        } else {
+            return baseMovement(state)
         }
-
-        return baseMovement(state)
     }
 
     // Fallback
