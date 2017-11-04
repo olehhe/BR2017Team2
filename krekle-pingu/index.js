@@ -1,5 +1,19 @@
 var nextAction;
 
+// Stats
+function isStrongest(state) {
+    strongest = true
+    currentStrength = state.you.strength;
+    state.enemies.forEach(function(enemy) {
+        if (currentStrength < enemy.strength) {
+             strongest = false;
+             break;
+        }
+    })
+    return strongest;
+}
+
+
 // Agressive
 function distanceToEnemy(currentPosition, enemyPosition) {
     var distanceX = Math.abs(currentPosition.x - enemyPosition.x);
@@ -14,7 +28,7 @@ function shouldShoot(state) {
 
     var shoot = false;
     enemyPositions.forEach(function(enemy) {
-        if (distanceToEnemy(currentPosition, enemy) < state.visibility) {
+        if (distanceToEnemy(currentPosition, enemy) < state.weaponRange) {
             switch (currentPosition.direction) {
                 case "top":
                     shoot = enemy.x == currentPosition.x && enemy.y < currentPosition.y;
@@ -39,7 +53,62 @@ function shouldShoot(state) {
 
 
 // Movement
+function turnAgainsPlayerLeftOrRight(state) {
+    orientation = state.you.direction;
+    currentPosition = {x: state.you.x, y: state.you.y};
+    enemyPosition = {x: state.enemies[0].x, y: state.enemies[0].y};
+
+    switch(orientation) {
+        case "top":
+            if (currentPosition.y == enemyPosition.y) {
+                if (currentPosition.x > enemyPosition.x) {
+                    return 'rotate-left';
+                } else {
+                    return 'rotate-right';
+                }
+            }
+            break;
+        case "bottom":
+            if (currentPosition.y == enemyPosition.y) {
+                if (currentPosition.x < enemyPosition.x) {
+                    return 'rotate-left';
+                } else {
+                    return 'rotate-right';
+                }
+            }
+            break;
+        case "left":
+            if (currentPosition.x == enemyPosition.x) {
+                if (currentPosition.y > enemyPosition.y) {
+                    return 'rotate-left';
+                } else {
+                    return 'rotate-right';
+                }
+            }
+            break;
+        case "right":
+            if (currentPosition.x == enemyPosition.x) {
+                if (currentPosition.y < enemyPosition.y) {
+                    return 'rotate-left';
+                } else {
+                    return 'rotate-right';
+                }
+            }
+            break;
+        default:
+            return null;
+    }
+}
+
 function baseMovement(state) {
+    // if stronger -> turn
+    if (isStrongest(state)) {
+        turnTowardPenguin = turnAgainsPlayerLeftOrRight(state);
+        if (turnTowardPenguin) {
+            return turnTowardPenguin;
+        }
+    }
+
     direction = state.you.direction;
     nextPosition = {x: state.you.x, y: state.you.y};
     switch (direction) {
