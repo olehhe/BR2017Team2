@@ -8,9 +8,12 @@ function distanceToEnemy(currentPosition, enemyPosition) {
     return distance;
 }
 
-function shouldShot(currentPosition, enemyPositions) {
+function shouldShot(state) {
+    currentPosition = state.you;
+    enemyPositions = state.enemies;
+
     enemyPositions.forEach(function(enemy) {
-        if (distanceToEnemy(currentPosition, enemy) < 3) {
+        if (distanceToEnemy(currentPosition, enemy) < state.visibility) {
             var shoot = false;
             switch (currentPosition.direction) {
                 case "top":
@@ -69,11 +72,11 @@ function baseMovement(state) {
 }
 
 function isTileSafe(point, state) {
-    if(point.x == 0 || point.x == state.mapWidth - 1) {
+    if(point.x == -1 || point.x == state.mapWidth) {
         return false;
     }
 
-    if(point.y == 0 || point.y == state.mapHeight - 1) {
+    if(point.y == -1 || point.y == state.mapHeight) {
         return false;
     }
     
@@ -110,7 +113,7 @@ function calculateMove(state){
         "shoot"
     ];
 
-    if (shouldShot(state.you, state.enemies)) {
+    if (shouldShot(state)) {
         return commands[4];
     } else {
         return baseMovement(state)
