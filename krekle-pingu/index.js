@@ -58,7 +58,7 @@ function baseMovement(state) {
             break;
     }
 
-    if (areTilesSafe(point, state)) {
+    if (areTilesSafe(nextPosition, state)) {
         // Move ahead if free tile
         return 'advance';
     } else {
