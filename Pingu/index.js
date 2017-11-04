@@ -250,7 +250,8 @@ function calculateMove(state){
     if (shouldShoot(state)) {
         return commands[4];
     } else {
-        var powerUpPoint = powerUpInVicinity(state);
+        //var powerUpPoint = powerUpInVicinity(state);
+        var powerUpPoint = null
         if (powerUpPoint) {
             //moveTo(powerUpPoint);
         } else {
