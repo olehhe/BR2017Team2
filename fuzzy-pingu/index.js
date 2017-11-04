@@ -108,12 +108,11 @@ function itBurns(body, self, enemy) {
 }
 
 function willCollide(body, self, enemy) {
-  return body.walls.reduce(
-    (collided, wall) => collision(collided, self, wall), false
+  return body.walls.reduce((collided, wall) => collision(collided, self, wall), false
   ) || outerWallCollisionMap[self.direction](body, self);
 }
 
-function collision(collided, body, self, wall) {
+function collision(collided, self, wall) {
   return collided || innerWallCollisionMap[self.direction](self, wall);
 }
 
