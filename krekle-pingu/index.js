@@ -122,8 +122,39 @@ function turnAgainsStuffLeftOrRight(state, stuff) {
     }
 }
 
+function noCombatTurn(direction, state) {
+    positionX = state.you.x;
+    positionY = state.you.y;
+
+    height = state.mapHeight;
+    width = state.mapWidth;
+
+    switch (direction) {
+        case 'top':
+            if (positionX > width / 2) {
+                return 'rotate-left';
+            }
+            return 'rotate-right';
+        case 'bottom':
+            if (positionX > width / 2) {
+                return 'rotate-right';
+            }
+            return 'rotate-left';
+        case 'right':
+            if (positionY > height / 2) {
+                return 'rotate-left';
+            }
+            return 'rotate-right';
+        case 'left':
+            if (positionY > height / 2) {
+                return 'rotate-right';
+            }
+            return 'rotate-left';
+    }
+}
+
 function baseMovement(state) {
-    // if stronger -> turn
+    // Turn - for enemy or bonus
     turnToward = turnTo(state);
     if (turnToward) {
         return turnToward;
@@ -134,6 +165,7 @@ function baseMovement(state) {
     switch (direction) {
         case 'top':
             nextPosition.y = nextPosition.y - 1;
+            nextTurn.
             break;
         case 'bottom':
             nextPosition.y = nextPosition.y + 1;
@@ -151,9 +183,9 @@ function baseMovement(state) {
         return 'advance';
     } else {
         // Random rotation
-        var rotation = ['rotate-left', 'rotate-right', 'shoot'];
-        var rnd = Math.floor(Math.random() * 3);
-        return rotation[rnd];
+        //var rotation = ['rotate-left', 'rotate-right', 'shoot'];
+        //var rnd = Math.floor(Math.random() * 3);
+        return noCombatTurn(direction, state);
     }
 }
 
