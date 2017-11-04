@@ -1,14 +1,28 @@
-var nextAction;
+var nextCommand;
 
 function doSomethingRandom(state){
-    var direction = state.you.direction;
+    const direction = state.you.direction;
 
-    if(nextAction) {
-        if(nextAction != direction) {
-            return "rotate-right";
+    if(nextCommand) {
+        var splat = nextCommand.split('_');
+        var action = splat[1];
+
+        if(splat[0] == 'move') {
+            if(action != direction) {
+                if(direction == 'top' && action == 'left' 
+                || direction == 'bottom' && action == 'right'
+                || direction == 'left' && action == 'down'
+                || direction == 'right' && action == 'top'){
+                    return "rotate-left";
+                }
+
+                return "rotate-right";
+            }
+
+            return "advance";
         }
 
-        return "advance";
+        return action;
     }
 
     var commands = [
@@ -43,9 +57,9 @@ function getBody(req){
         case 'POST':
             return action(req.body);
         case 'PATCH':
-            const previousAction = nextAction;
-            nextAction = req.body.nextAction;
-            return { nextAction, previousAction };
+            const previousAction = nextCommand;
+            nextCommand = req.body.nextCommand;
+            return { nextCommand, previousAction };
     }
 }
 
