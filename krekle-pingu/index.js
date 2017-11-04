@@ -66,6 +66,9 @@ function turnTo(state) {
     // Bonus
     var closest = { distance: null, bonus: null, turn: null};
     var bonuses = state.bonusTiles.forEach((bonus) => {
+        if(bonus.type === 'jquery')
+            return; 
+            
         var bonusPos = { x: bonus.x, y: bonus.y };
         var distance = distanceToEnemy({ x: state.you.x, y: state.you.y }, bonusPos);
         
@@ -74,7 +77,7 @@ function turnTo(state) {
     });
     
     return closest.turn == null && closest.bonus != null ? 
-        shootOrAdvance(state) : null;
+        shootOrAdvance(state) : closest.turn;
 }
 
 function shootOrAdvance(state) {
@@ -284,34 +287,35 @@ function info(){
     }
 }
 
-var nextCommand;
-function action(state) {
-    if(nextCommand) {
-        var direction = state.you.direction;
-        var splat = nextCommand.split('_');
-        var action = splat[1];
+function getManualCommand(nextCommand, state) {
+    var direction = state.you.direction;
+    var splat = nextCommand.split('_');
+    var action = splat[1];
 
-        if(splat[0] == 'move') {
-            if(action != direction) {
-                if(direction == 'top' && action == 'left' 
-                || direction == 'bottom' && action == 'right'
-                || direction == 'left' && action == 'bottom'
-                || direction == 'right' && action == 'top'){
-                    return "rotate-left";
-                }
-
-                return "rotate-right";
+    if(splat[0] == 'move') {
+        if(action != direction) {
+            if(direction == 'top' && action == 'left' 
+            || direction == 'bottom' && action == 'right'
+            || direction == 'left' && action == 'bottom'
+            || direction == 'right' && action == 'top'){
+                return "rotate-left";
             }
 
-            return "advance";
+            return "rotate-right";
         }
 
-        return action;
+        return "advance";
     }
 
+    return action;
+}
+
+var nextCommand;
+function action(state) {
+    var command = nextCommand ? getManualCommand(nextCommand, state) : calculateMove(state);
 
     return {
-        command: calculateMove(state)
+        command
     };
 }
 
