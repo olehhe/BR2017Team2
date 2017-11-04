@@ -64,16 +64,24 @@ function turnTo(state) {
     }
     
     // Bonus
-    turn = null;
-    state.bonusTiles.forEach(function (bonusTile) {
-        bonusPos = {x: bonusTile.x, y: bonusTile.y};
-        turnToBonus = turnAgainsStuffLeftOrRight(state, bonusPos);
-        if (turnToBonus) {
-            turn = turnToBonus;
-        }
-    });
+    var closest = { distance: null, bonus: null, turn: null};
+    var bonuses = state.bonusTiles.forEach((bonus) => {
+        var bonusPos = { x: bonus.x, y: bonus.y };
+        var distance = distanceToEnemy({ x: state.you.x, y: state.you.y }, bonusPos);
+        
+        if(closest.distance == null || distance < closest.distance)
+            closest = { distance, bonus, turn: turnAgainsStuffLeftOrRight(state, bonusPos)};
+    }); 
 
-    return turn
+    // state.bonusTiles.forEach(function (bonusTile) {
+    //     bonusPos = {x: bonusTile.x, y: bonusTile.y};
+    //     turnToBonus = turnAgainsStuffLeftOrRight(state, bonusPos);
+    //     if (turnToBonus) {
+    //         turn = turnToBonus;
+    //     }
+    // });
+
+    return closest.turn
 }
 
 function turnAgainsStuffLeftOrRight(state, stuff) {
