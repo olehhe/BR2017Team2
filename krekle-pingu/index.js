@@ -69,18 +69,10 @@ function turnTo(state) {
         var bonusPos = { x: bonus.x, y: bonus.y };
         var distance = distanceToEnemy({ x: state.you.x, y: state.you.y }, bonusPos);
         
-        if(closest.distance == null || distance < closest.distance)
+        if(distance < 4 && (closest.distance == null || distance < closest.distance))
             closest = { distance, bonus, turn: turnAgainsStuffLeftOrRight(state, bonusPos)};
     }); 
-
-    // state.bonusTiles.forEach(function (bonusTile) {
-    //     bonusPos = {x: bonusTile.x, y: bonusTile.y};
-    //     turnToBonus = turnAgainsStuffLeftOrRight(state, bonusPos);
-    //     if (turnToBonus) {
-    //         turn = turnToBonus;
-    //     }
-    // });
-
+    
     return closest.turn
 }
 
