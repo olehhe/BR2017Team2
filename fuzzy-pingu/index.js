@@ -107,7 +107,7 @@ function willCollide(body, self, enemy) {
 }
 
 function collision(collided, body, self, wall) {
-  return collided || collisionMap[self.direction](self, wall);
+  return collided || collisionMap[self.direction](body, self, wall);
 }
 
 var prependicular = {
@@ -118,10 +118,12 @@ var prependicular = {
 }
 
 var collisionMap = {
-  top: (body, self, wall) => self.y - 1 === wall.y && self.y - 1 > -1,
-  bottom: (body, self, wall) => self.y + 1 === wall.y && self.y + 1 <= body.mapHeight,
-  left: (body, self, wall) => self.x - 1 === wall.y && self.x -1 > -1,
-  right: (body, self, wall) => self.x + 1 === wall.y && self.x + 1 <= body.mapWidth
+  top: (body, self, wall) => 
+    (self.y - 1 === wall.y || self.y - 1 < 0),
+  bottom: (body, self, wall) => 
+    self.y + 1 === wall.y || self.y + 1 > body.mapHeight,
+  left: (body, self, wall) => 
+    self.x - 1 === wall.y || self.x -1 < 0,
+  right: (body, self, wall) => 
+    self.x + 1 === wall.y || self.x + 1 <= body.mapWidth
 };
-
-function isWithinMap()
