@@ -41,7 +41,6 @@ function shouldShot(currentPosition, enemyPositions) {
 // Movement
 function baseMovement(state) {
     direction = state.you.direction;
-    
     nextPosition = {x: state.you.x, y: state.you.y};
     switch (direction) {
         case 'top':
@@ -58,7 +57,7 @@ function baseMovement(state) {
             break;
     }
 
-    if (areTilesSafe(nextPosition, state)) {
+    if (isTileSafe(nextPosition, state)) {
         // Move ahead if free tile
         return 'advance';
     } else {
@@ -69,13 +68,21 @@ function baseMovement(state) {
     }
 }
 
-function areTilesSafe(point, state) {
+function isTileSafe(point, state) {
+    if(point.x == 0 || point.x == state.mapWidth - 1) {
+        return false;
+    }
+
+    if(point.y == 0 || point.y == state.mapHeight - 1) {
+        return false;
+    }
+    
     walls = state.walls;
     fires = state.fire;
-    return isTileFree(point, walls) && isTileFree(point, fires);
+    return isTileOpen(point, walls) && isTileOpen(point, fires);
 }
 
-function isTileFree(point, items) {
+function isTileOpen(point, items) {
     items.forEach(function(item) {
         if (item.x == point.x && item.y == point.y) {
             return false;
