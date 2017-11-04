@@ -17,10 +17,10 @@ function shouldShoot(state) {
         if (distanceToEnemy(currentPosition, enemy) < state.visibility) {
             switch (currentPosition.direction) {
                 case "top":
-                    shoot = enemy.x == currentPosition.x && enemy.y > currentPosition.y;
+                    shoot = enemy.x == currentPosition.x && enemy.y < currentPosition.y;
                     break;
                 case "bottom":
-                    shoot = enemy.x == currentPosition.x && enemy.y < currentPosition.y;
+                    shoot = enemy.x == currentPosition.x && enemy.y > currentPosition.y;
                     break;
                 case "left":
                     shoot = enemy.y == currentPosition.y && enemy.x < currentPosition.x;
@@ -62,8 +62,8 @@ function baseMovement(state) {
         return 'advance';
     } else {
         // Random rotation
-        var rotation = ['rotate-left', 'rotate-right'];
-        var rnd = Math.floor(Math.random() * 2);
+        var rotation = ['rotate-left', 'rotate-right', 'shoot'];
+        var rnd = Math.floor(Math.random() * 3);
         return rotation[rnd];
     }
 }
