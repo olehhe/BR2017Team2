@@ -3,9 +3,9 @@ var nextAction;
 // Stats
 function isStrongest(state) {
     strongest = true
-    currentStrength = state.you.strength;
+    currentStrength = state.you.strength + state.you.weaponRange + state.you.weaponDamage;
     state.enemies.forEach(function(enemy) {
-        if (currentStrength < enemy.strength) {
+        if (currentStrength < enemy.strength + enemy.weaponRange + enemy.weaponDamage) {
              strongest = false;
         }
     });
