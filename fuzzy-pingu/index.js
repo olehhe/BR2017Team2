@@ -9,8 +9,10 @@ function doSomething(body) {
     if(shouldFire(body, self, enemy))
         return "shoot";
     
-    if(shouldFlee(body, self, enemy))
-        return "retreat";
+    if(shouldFlee(body, self, enemy)){
+      self.direction = prependicular(self.direction);
+      return !willCollide(body, self, enemy) ? "retreat" : "advance";
+    }
 
     if(!willCollide(body, self, enemy))
       return "advance";
@@ -108,9 +110,18 @@ function collision(collided, self, wall) {
   return collided || collisionMap[self.direction](self, wall);
 }
 
+var prependicular = {
+  top: "bottom",
+  bottom: "top",
+  left: "right",
+  right: "left"
+}
+
 var collisionMap = {
-  top: (self, wall) => self.y + 1 === wall.y,
-  bottom: (self, wall) => self.y - 1 === wall.y,
-  left: (self, wall) => self.x - 1 === wall.y,
-  right: (self, wall) => self.x + 1 === wall.y
+  top: (body, self, wall) => self.y - 1 === wall.y && self.y - 1 > -1,
+  bottom: (body, self, wall) => self.y + 1 === wall.y && self.y + 1 <= body.mapHeight,
+  left: (body, self, wall) => self.x - 1 === wall.y && self.x -1 > -1,
+  right: (body, self, wall) => self.x + 1 === wall.y && self.x + 1 <= body.mapWidth
 };
+
+function isWithinMap()
