@@ -97,15 +97,15 @@ function standingInFire(alreadyBurnt, fire, self){
 }
 
 function itBurns(body, self, enemy) {
-  return body.fire.reduce(standingInFire, false);
+  return body.fire.reduce((burnt, fire) => standingInFire(burnt, fire, self), false);
 }
 
 function willCollide(body, self, enemy) {
-  return body.walls.reduce(collision, false);
+  return body.walls.reduce((collided, wall) => collision(collided, self, wall), false);
 }
 
-function collision(body, self, enemy) {
-  return acc || collisionMap[self.direction](self, body.wall);
+function collision(collided, self, wall) {
+  return collided || collisionMap[self.direction](self, wall);
 }
 
 var collisionMap = {
