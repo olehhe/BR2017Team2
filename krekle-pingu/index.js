@@ -83,14 +83,13 @@ function isTileSafe(point, state) {
 }
 
 function isTileOpen(point, items) {
-    safe = true
+    var isOpen = true;
     items.forEach(function(item) {
         if (item.x == point.x && item.y == point.y) {
-            safe = false;
-            break;
+            isOpen = false;
         }
     }, this);
-    return safe;
+    return isOpen;
 }
 
 function calculateMove(state){

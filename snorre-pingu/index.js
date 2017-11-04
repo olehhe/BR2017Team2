@@ -1,6 +1,6 @@
 var nextCommand;
 
-function doSomethingRandom(state){
+function doSomethingHacky(state){
     const direction = state.you.direction;
 
     if(nextCommand) {
@@ -11,7 +11,7 @@ function doSomethingRandom(state){
             if(action != direction) {
                 if(direction == 'top' && action == 'left' 
                 || direction == 'bottom' && action == 'right'
-                || direction == 'left' && action == 'down'
+                || direction == 'left' && action == 'bottom'
                 || direction == 'right' && action == 'top'){
                     return "rotate-left";
                 }
@@ -46,7 +46,7 @@ function info(){
 
 function action(state) {
     return {
-        command: doSomethingRandom(state)
+        command: doSomethingHacky(state)
     };
 }
 
@@ -64,7 +64,6 @@ function getBody(req){
 }
 
 module.exports = function (context, req) {
-
     context.log('JavaScript HTTP trigger function processed a request.', req.body);
     context.res = {
         body: getBody(req)
