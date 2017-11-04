@@ -110,11 +110,11 @@ function itBurns(body, self, enemy) {
 function willCollide(body, self, enemy) {
   return body.walls.reduce(
     (collided, wall) => collision(collided, self, wall), false
-  ) || outerWallCollisionMap(body, self);
+  ) || outerWallCollisionMap[self.direction](body, self);
 }
 
 function collision(collided, body, self, wall) {
-  return collided || innerWallCollisionMap[self.direction](body, self, wall);
+  return collided || innerWallCollisionMap[self.direction](self, wall);
 }
 
 var prependicular = {
