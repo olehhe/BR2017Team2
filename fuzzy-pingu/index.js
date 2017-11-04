@@ -1,7 +1,7 @@
 function doSomething(body) {
 
-    var commands = ["rotate-right", "rotate-left", "advance"];
-    var rnd = Math.floor(Math.random() * 3);
+    var commands = ["rotate-right", "rotate-left"];
+    var rnd = Math.floor(Math.random() * 2);
 
     var self = body.you; 
     var enemy = body.enemies[0];
@@ -11,6 +11,9 @@ function doSomething(body) {
     
     if(shouldFlee(body, self, enemy))
         return "retreat";
+
+    if(!willCollide(body, self, enemy))
+      return "advance";
 
     return commands[rnd]
 }
@@ -98,9 +101,11 @@ function itBurns(body, self, enemy) {
 }
 
 function willCollide(body, self, enemy) {
-  return body.walls.reduce((acc, next) => {
-    return collisionMap[self.direction](self, body.wall) || acc;
-  });
+  return body.walls.reduce(collision, false);
+}
+
+function collision(body, self, enemy) {
+  return acc || collisionMap[self.direction](self, body.wall);
 }
 
 var collisionMap = {
