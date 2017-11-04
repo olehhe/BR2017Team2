@@ -66,6 +66,9 @@ function turnTo(state) {
     // Bonus
     var closest = { distance: null, bonus: null, turn: null};
     var bonuses = state.bonusTiles.forEach((bonus) => {
+        if(bonus.type === 'jquery')
+            return; 
+            
         var bonusPos = { x: bonus.x, y: bonus.y };
         var distance = distanceToEnemy({ x: state.you.x, y: state.you.y }, bonusPos);
         
