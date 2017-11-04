@@ -7,9 +7,8 @@ function isStrongest(state) {
     state.enemies.forEach(function(enemy) {
         if (currentStrength < enemy.strength) {
              strongest = false;
-             break;
         }
-    })
+    });
     return strongest;
 }
 
