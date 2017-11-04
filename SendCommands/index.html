@@ -1,0 +1,46 @@
+<html>
+<head>
+<script src="script.js"></script>
+
+<style>
+	body {
+		background-color: powderblue;
+	}
+
+	td {
+		text-align: center;
+	}
+
+	button {
+		width: 100%;
+		height: 30px;
+	}
+</style>
+</head>
+
+<table>
+	<tr>
+		<td></td>
+		<td><button onclick="sendCommand('move_top')">Up</button></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td><button onclick="sendCommand('move_left')">Left</button></td>
+		<td><button onclick="sendCommand('_retreat')">Back</button></td>
+		<td><button onclick="sendCommand('move_right')">Right</button></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><button onclick="sendCommand('move_bottom')">Down</button></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td colspan="3"><button onclick="sendCommand('_shoot')">Shoot</button></td>
+	</tr>
+	<tr>
+		<td colspan="3"><button onclick="sendCommand(null)">Reset</button></td>
+	</tr>
+
+</table>
+
+</html>
