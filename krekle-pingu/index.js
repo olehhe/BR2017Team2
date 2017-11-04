@@ -79,18 +79,18 @@ function turnAgainsPlayerLeftOrRight(state) {
         case "left":
             if (currentPosition.x == enemyPosition.x) {
                 if (currentPosition.y > enemyPosition.y) {
-                    return 'rotate-left';
-                } else if (currentPosition.y < enemyPosition.y) {
                     return 'rotate-right';
+                } else if (currentPosition.y < enemyPosition.y) {
+                    return 'rotate-left';
                 }
             }
             break;
         case "right":
             if (currentPosition.x == enemyPosition.x) {
                 if (currentPosition.y < enemyPosition.y) {
-                    return 'rotate-left';
-                } else if (currentPosition.y > enemyPosition.y) {
                     return 'rotate-right';
+                } else if (currentPosition.y > enemyPosition.y) {
+                    return 'rotate-left';
                 }
             }
             break;

@@ -5,12 +5,11 @@ function doSomething(body) {
   var self = body.you;
   var enemy = body.enemies[0];
 
-  if (shouldFire(body, self, enemy)) return "shoot";
+  if (shouldFire(body, self, enemy)) 
+    return "shoot";
 
   if (shouldFlee(body, self, enemy)) {
     self.direction = prependicular(self.direction);
-
-    return !willCollide(body, self, enemy) ? "retreat" : "advance";
   }
 
   if (!willCollide(body, self, enemy)) 
