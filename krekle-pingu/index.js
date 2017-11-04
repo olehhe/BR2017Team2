@@ -47,16 +47,16 @@ function baseMovement(state) {
     nextPosition = {x: state.you.x, y: state.you.y};
     switch (direction) {
         case 'top':
-            nextPosition.y--;
+            nextPosition.y = nextPosition.y - 1;
             break;
         case 'bottom':
-            nextPosition.y++;
+            nextPosition.y = nextPosition.y + 1;
             break;
         case 'right':
-            nextPosition.x++;
+            nextPosition.x = nextPosition.x + 1;
             break;
         case 'left':
-            nextPosition.x--;
+            nextPosition.x = nextPosition.x - 1;
             break;
     }
 
