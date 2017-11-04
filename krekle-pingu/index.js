@@ -72,11 +72,11 @@ function baseMovement(state) {
 }
 
 function isTileSafe(point, state) {
-    if(point.x == -1 || point.x == state.mapWidth) {
+    if(point.x == 0 || point.x == state.mapWidth) {
         return false;
     }
 
-    if(point.y == -1 || point.y == state.mapHeight) {
+    if(point.y == 0 || point.y == state.mapHeight) {
         return false;
     }
     
