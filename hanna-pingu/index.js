@@ -5,7 +5,7 @@ function doSomethingRandom(state){
 
     if(nextAction) {
         if(nextAction != direction) {
-            return "rotate-right";
+            return "shoot";
         }
 
         return "advance";
