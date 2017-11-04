@@ -283,8 +283,8 @@ function info(){
 
 var nextCommand;
 function action(state) {
-
     if(nextCommand) {
+        var direction = state.you.direction;
         var splat = nextCommand.split('_');
         var action = splat[1];
 
