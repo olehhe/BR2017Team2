@@ -182,9 +182,10 @@ function baseMovement(state) {
         return 'advance';
     } else {
         // Random rotation
-        //var rotation = ['rotate-left', 'rotate-right', 'shoot'];
-        //var rnd = Math.floor(Math.random() * 3);
-        return noCombatTurn(direction, state);
+        var rotation = ['rotate-left', 'rotate-right', 'shoot'];
+        var rnd = Math.floor(Math.random() * 3);
+        //return noCombatTurn(direction, state);
+        return rotation[rnd]; 
     }
 }
 
