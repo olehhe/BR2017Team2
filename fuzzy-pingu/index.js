@@ -13,7 +13,8 @@ function doSomething(body) {
     return !willCollide(body, self, enemy) ? "retreat" : "advance";
   }
 
-  if (!willCollide(body, self, enemy)) return "advance";
+  if (!willCollide(body, self, enemy)) 
+    return "advance";
 
   return commands[rnd];
 }
@@ -107,14 +108,12 @@ function itBurns(body, self, enemy) {
 }
 
 function willCollide(body, self, enemy) {
-  return body.walls.reduce(
-    (collided, wall) => collision(collided, body, self, wall),
-    false
-  );
+  return body.walls.reduce((collided, wall) => collision(collided, self, wall), false
+  ) || outerWallCollisionMap[self.direction](body, self);
 }
 
-function collision(collided, body, self, wall) {
-  return collided || collisionMap[self.direction](body, self, wall);
+function collision(collided, self, wall) {
+  return collided || innerWallCollisionMap[self.direction](self, wall);
 }
 
 var prependicular = {
@@ -124,16 +123,30 @@ var prependicular = {
   right: "left"
 };
 
-var collisionMap = {
-  top: (body, self, wall) => 
-    self.y === wall.y + 1 || self.y === 0,
+var innerWallCollisionMap = {
+  top: (self, wall) => 
+    self.y === wall.y + 1,
 
-  bottom: (body, self, wall) =>
-    self.y === wall.y - 1 || self.y === body.mapHeight,
+  bottom: (self, wall) =>
+    self.y === wall.y - 1,
 
-  left: (body, self, wall) => 
-    self.x === wall.X + 1 || self.x === 0,
+  left: (self, wall) => 
+    self.x === wall.X + 1,
 
-  right: (body, self, wall) =>
-    self.X === wall.X - 1 || self.x === body.mapWidth
+  right: (self, wall) =>
+    self.X === wall.X - 1
+};
+
+var outerWallCollisionMap = {
+  top: (body, self) => 
+    self.y === 0,
+
+  bottom: (body, self) =>
+    self.y === body.mapHeight,
+
+  left: (body, self) => 
+    self.x === 0,
+
+  right: (body, self) =>
+    self.x === body.mapWidth
 };
