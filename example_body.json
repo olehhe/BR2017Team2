@@ -16,7 +16,7 @@
         "ammo": 10,
         "weaponRange": 10,
         "weaponDamage": 2
-      },
+    },
     "enemies": [
         {
             "x": 1,
