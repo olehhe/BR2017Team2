@@ -32,7 +32,7 @@ function getPlayerVicinityGrid(state) {
     return grid;
 }
 
-function shouldShot(state) {
+function shouldShoot(state) {
     currentPosition = state.you;
     enemyPositions = state.enemies;
 
@@ -247,15 +247,15 @@ function calculateMove(state){
         "shoot"
     ];
 
-    if (shouldShot(state)) {
+    if (shouldShoot(state)) {
         return commands[4];
     } else {
         var powerUpPoint = powerUpInVicinity(state);
         if (powerUpPoint) {
-            moveTo(powerUpPoint);
+            //moveTo(powerUpPoint);
+        } else {
+            return baseMovement(state)
         }
-
-        return baseMovement(state)
     }
 
     // Fallback
