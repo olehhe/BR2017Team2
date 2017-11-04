@@ -62,7 +62,7 @@ function turnAgainsPlayerLeftOrRight(state) {
             if (currentPosition.y == enemyPosition.y) {
                 if (currentPosition.x > enemyPosition.x) {
                     return 'rotate-left';
-                } else {
+                } else if (currentPosition.x < enemyPosition.x) {
                     return 'rotate-right';
                 }
             }
@@ -71,7 +71,7 @@ function turnAgainsPlayerLeftOrRight(state) {
             if (currentPosition.y == enemyPosition.y) {
                 if (currentPosition.x < enemyPosition.x) {
                     return 'rotate-left';
-                } else {
+                } else if (currentPosition.x > enemyPosition.x)  {
                     return 'rotate-right';
                 }
             }
@@ -80,7 +80,7 @@ function turnAgainsPlayerLeftOrRight(state) {
             if (currentPosition.x == enemyPosition.x) {
                 if (currentPosition.y > enemyPosition.y) {
                     return 'rotate-left';
-                } else {
+                } else if (currentPosition.y < enemyPosition.y) {
                     return 'rotate-right';
                 }
             }
@@ -89,7 +89,7 @@ function turnAgainsPlayerLeftOrRight(state) {
             if (currentPosition.x == enemyPosition.x) {
                 if (currentPosition.y < enemyPosition.y) {
                     return 'rotate-left';
-                } else {
+                } else if (currentPosition.y > enemyPosition.y) {
                     return 'rotate-right';
                 }
             }
