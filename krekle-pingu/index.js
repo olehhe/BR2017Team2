@@ -74,7 +74,7 @@ function turnTo(state) {
     });
     
     return closest.turn == null && closest.bonus != null ? 
-        shootOrAdvance(state) : null;
+        shootOrAdvance(state) : closest.turn;
 }
 
 function shootOrAdvance(state) {
