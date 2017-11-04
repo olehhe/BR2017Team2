@@ -8,34 +8,31 @@ function distanceToEnemy(currentPosition, enemyPosition) {
     return distance;
 }
 
-function shouldShot(state) {
+function shouldShoot(state) {
     currentPosition = state.you;
     enemyPositions = state.enemies;
 
+    var shoot = false;
     enemyPositions.forEach(function(enemy) {
         if (distanceToEnemy(currentPosition, enemy) < state.visibility) {
-            var shoot = false;
             switch (currentPosition.direction) {
                 case "top":
-                shoot = enemy.x == currentPosition.x && enemy.y > currentPosition.y;
-                break;
+                    shoot = enemy.x == currentPosition.x && enemy.y > currentPosition.y;
+                    break;
                 case "bottom":
-                shoot = enemy.x == currentPosition.x && enemy.y < currentPosition.y;
-                break;
+                    shoot = enemy.x == currentPosition.x && enemy.y < currentPosition.y;
+                    break;
                 case "left":
-                shoot = enemy.y == currentPosition.y && enemy.x < currentPosition.x;
-                break;
+                    shoot = enemy.y == currentPosition.y && enemy.x < currentPosition.x;
+                    break;
                 case "right":
-                shoot = enemy.y == currentPosition.y && enemy.x > currentPosition.x;
-                break;
+                    shoot = enemy.y == currentPosition.y && enemy.x > currentPosition.x;
+                    break;
             }  
-            if (shoot) {
-                return true;
-            }
         }
     }, this);
     
-    return false;
+    return shoot;
 }
 
 // Survival
@@ -86,12 +83,14 @@ function isTileSafe(point, state) {
 }
 
 function isTileOpen(point, items) {
+    safe = true
     items.forEach(function(item) {
         if (item.x == point.x && item.y == point.y) {
-            return false;
+            safe = false;
+            break;
         }
     }, this);
-    return true;
+    return safe;
 }
 
 function calculateMove(state){
@@ -113,7 +112,7 @@ function calculateMove(state){
         "shoot"
     ];
 
-    if (shouldShot(state)) {
+    if (shouldShoot(state)) {
         return commands[4];
     } else {
         return baseMovement(state)
