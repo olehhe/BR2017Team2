@@ -78,7 +78,7 @@ function info(){
 
 function action(state) {
     return {
-        command: calculateMove(state)
+        command: 'shoot'; //calculateMove(state)
     };
 }
 
