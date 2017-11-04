@@ -71,10 +71,41 @@ function turnTo(state) {
         
         if(distance < 4 && (closest.distance == null || distance < closest.distance))
             closest = { distance, bonus, turn: turnAgainsStuffLeftOrRight(state, bonusPos)};
-    }); 
+    });
     
-    return closest.turn
+    return closest.turn == null && closest.bonus != null ? 
+        shootOrAdvance(state) : null;
 }
+
+function shootOrAdvance(state) {
+    direction = state.you.direction;
+    nextPosition = {x: state.you.x, y: state.you.y};
+    switch (direction) {
+        case 'top':
+            nextPosition.y = nextPosition.y - 1;
+            break;
+        case 'bottom':
+            nextPosition.y = nextPosition.y + 1;
+            break;
+        case 'right':
+            nextPosition.x = nextPosition.x + 1;
+            break;
+        case 'left':
+            nextPosition.x = nextPosition.x - 1;
+            break;
+    }
+
+    if (isTileSafe(nextPosition, state)) {
+        // Move ahead if free tile
+        return 'advance';
+    }
+
+    if(nextPosition.x >= 0 && nextPosition.x <= state.mapWidth 
+        && nextPosition.y >= 0 && nextPosition.y <= state.mapHeight) {
+            return 'shoot';
+        }
+}
+
 
 function turnAgainsStuffLeftOrRight(state, stuff) {
     orientation = state.you.direction;
