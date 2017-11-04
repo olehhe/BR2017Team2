@@ -1,11 +1,35 @@
 var nextAction;
 
+// Util
+function numberRange (start, end) {
+    return new Array(end - start).fill().map((d, i) => i + start);
+}
+
 // Agressive
 function distanceToEnemy(currentPosition, enemyPosition) {
     var distanceX = Math.abs(currentPosition.x - enemyPosition.x);
     var distanceY = Math.abs(currentPosition.y - enemyPosition.y);
     var distance = Math.sqrt(distanceX*distanceX + distanceY*distanceY);
     return distance;
+}
+
+function getPlayerVicinityGrid(state) {
+    var pinguX = state.you.x;
+    var pinguY = state.you.y;
+    var boardEndX = state.mapWidth;
+    var boardEndY = state.mapHeight; 
+
+    var gridX = numberRange((pinguX - state.visibility), (pinguX + state.visibility) + 1);
+    var gridY = numberRange((pinguY - state.visibility), (pinguY + state.visibility) + 1);
+
+    var grid = [];
+    gridX.forEach(function(x, indexX) {
+        gridY.forEach(function(y, indexY) {
+            grid.push({ x: gridX[indexX], y: gridY[indexY] });
+        });
+    });
+
+    return grid;
 }
 
 function shouldShot(state) {
@@ -33,6 +57,59 @@ function shouldShot(state) {
     }, this);
     
     return shoot;
+}
+
+function powerUpInVicinity(state) {
+    var grid = getPlayerVicinityGrid(state);
+
+    var bonusTileInVicinity = null;
+    var bonusTiles = state.bonusTiles;
+    grid.forEach(function(point) {
+        bonusTiles.forEach(function(bonusPoint) {
+            if (point.x === bonusPoint.x && point.y === bonusPoint.y) {
+                bonusTileInVicinity = bonusPoint;
+                break;
+            }
+        });
+
+        if (bonusTileInVicinity !== null)
+            break;
+    });
+
+    return bonusTileInVicinity;
+}
+
+function isShootingPathObstructed(pingu, enemy, axis, walls) {
+    var isObstructed = false;
+    walls.forEach(function(wall) {
+        if (axis === "x" && wall.y === pingu.y) {
+            if (pingu.direction === "right") {
+                var xPointsInBetween = numberRange(pingu.x + 1, enemy.x);
+                if (xPointsInBetween.indexOf(wall.x) !== -1) {
+                    isObstructed = true;
+                }
+            } else if (pingu.direction === "left") {
+                var xPointsInBetween = numberRange(enemy.x + 1, pingu.x);
+                if (xPointsInBetween.indexOf(wall.x) !== -1) {
+                    isObstructed = true;
+                }
+            }
+        } else if (axis === "y" && wall.x === pingu.x) {
+            if (pingu.direction === "top") {
+                var yPointsInBetween = numberRange(enemy.y + 1, pingu.y);
+                if (pointyPointsInBetweensInBetween.indexOf(wall.y) !== -1) {
+                    isObstructed = true;
+                }
+            } else if (pingu.direction === "bottom") {
+                var yPointsInBetween = numberRange(pingu.y + 1, enemy.y);
+                if (yPointsInBetween.indexOf(wall.x) !== -1) {
+                    isObstructed = true;
+                }
+            }
+        }
+    });
+
+    return isObstructed;
 }
 
 // Survival
@@ -92,6 +169,65 @@ function isTileOpen(point, items) {
     return isOpen;
 }
 
+function inWhichDirectionIsPoint(pingu, point) {
+    var result = [];
+    if (pingu.x < point.x) {
+        result.push('right');
+    }
+    if (pingu.x > point.x) {
+        result.push('left');
+    }
+    if (pingu.y < point.y) {
+        result.push('bottom');
+    }
+    if (pingu.y > point.y) {
+        result.push('top');
+    }
+    return result;
+}
+
+function amIWellOriented(pingu, point) {
+    var directionOfPoint = inWhichDirectionIsPoint(pingu, point);
+    if (directionOfPoint.indexOf('right') != -1 && pingu.direction == 'right') {
+        return true;
+    }
+    if (directionOfPoint.indexOf('left') != -1 && pingu.direction == 'left') {
+        return true;
+    }
+    if (directionOfPoint.indexOf('bottom') != -1 && pingu.direction == 'bottom') {
+        return true;
+    }
+    if (directionOfPoint.indexOf('top') != -1 && pingu.direction == 'top') {
+        return true;
+    }
+    return false;
+}
+
+function orientTo(pingu, point) {
+    if (amIWellOriented(pingu, point)) {
+        return null;
+    }
+    var directionOfPoint = inWhichDirectionIsPoint(point);
+    if ((pingu.direction == 'top' && directionOfPoint.indexOf('right') != -1) ||
+        (pingu.direction == 'right' && directionOfPoint.indexOf('bottom') != -1) ||
+        (pingu.direction == 'bottom' && directionOfPoint.indexOf('left') != -1) ||
+        (pingu.direction == 'left' && directionOfPoint.indexOf('top') != -1)) {
+        return action('turn-right');
+    }
+    return action('turn-left');
+}
+
+function moveTo(pingu, point) {
+    if (pingu.x == point.x && pingu.y == point.y) {
+        return action('shoot');
+    }
+    if (!amIWellOriented(pingu, point)) {
+        var orientResult = orientTo(point);
+        if (orientResult) return orientResult;
+    }
+    return action('advance');
+}
+
 function calculateMove(state){
     // Controls
     var direction = state.you.direction;
@@ -114,6 +250,11 @@ function calculateMove(state){
     if (shouldShot(state)) {
         return commands[4];
     } else {
+        var powerUpPoint = powerUpInVicinity(state);
+        if (powerUpPoint) {
+            moveTo(powerUpPoint);
+        }
+
         return baseMovement(state)
     }
 
