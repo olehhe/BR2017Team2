@@ -67,7 +67,7 @@ function turnTo(state) {
     turn = null;
     state.bonusTiles.forEach(function (bonusTile) {
         bonusPos = {x: bonusTile.x, y: bonusTile.y};
-        turnToBonus = turnAgainsStuffLeftOrRight(state, bonusTile);
+        turnToBonus = turnAgainsStuffLeftOrRight(state, bonusPos);
         if (turn) {
             turn = turnToBonus;
         }
